@@ -1,0 +1,26 @@
+ check_password(password):
+    # Критерии для хорошего пароля
+    length_check = len(password) > 8
+    uppercase_check = any(char.isupper() for char in password)
+    lowercase_check = any(char.islower() for char in password)
+    digit_check = any(char.isdigit() for char in password)
+    keyboard_pattern_check = True
+    for i in range(len(password) - 2):
+        if (
+            (password[i].isalpha() and password[i + 1].isalpha() and password[i + 2].isalpha())
+            or
+            (password[i].isdigit() and password[i + 1].isdigit() and password[i + 2].isdigit())
+        ):
+            keyboard_pattern_check = False
+            break
+
+    # Проверка пароля по всем критериям
+    if length_check and uppercase_check and lowercase_check and digit_check and keyboard_pattern_check:
+        return "ok"
+    else:
+        return "error"
+
+# Ввод пароля пользователем
+password = input("Введите пароль: ")
+result = check_password(password)
+print(result)def
