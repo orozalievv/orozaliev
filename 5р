@@ -1,0 +1,41 @@
+import argparse
+
+
+def read_file(file_name):
+    try:
+        with open(file_name, "r") as file:
+            return file.readlines()
+    except FileNotFoundError:
+        print(f"Ошибка: файл {file_name} не найден.")
+        return []
+
+
+def display_file_content(lines, show_line_numbers, sort_lines, show_line_count):
+    if sort_lines:
+        lines = sorted(lines)
+
+    for i, line in enumerate(lines, 0):
+        if show_line_numbers:
+            print(f"{i} {line}", end="")
+        else:
+            print(line, end="")
+
+    if show_line_count:
+        print(f"\nКоличество строк: {len(lines)}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Отображение содержимого файла с опциями")
+    parser.add_argument("file_name", help="Имя файла")
+    parser.add_argument("--count", action="store_true", help="Показать количество строк")
+    parser.add_argument("--num", action="store_true", help="Показать номера строк")
+    parser.add_argument("--sort", action="store_true", help="Сортировать строки")
+
+    args = parser.parse_args()
+
+    lines = read_file(args.file_name)
+    display_file_content(lines, args.num, args.sort, args.count)
+
+
+if __name__ == "__main__":
+    main()
